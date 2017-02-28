@@ -34,11 +34,12 @@ db.initialize = function (cb) {
                   console.log('error connecting to custom db')
                   cb(err)
                 } else {
-                  client.query('CREATE TABLE courses(courseid serial PRIMARY KEY,coursename varchar(35), startdate varchar(20), enddate varchar(20))', function (err, result) {
+                  client.query('CREATE TABLE courses(courseId serial PRIMARY KEY,courseName varchar(35), startDate varchar(20), endDate varchar(20))', function (err, result) {
                     if (err) {
                       console.log('table creation error')
                       cb(err)
                     } else {
+                      client.query('CREATE TABLE students(studentId varchar(35), courseId INTEGER, studentName varchar(35), roomNumber varchar(5), seatNumber varchar(5))')
                       console.log('Table creation successful')
                       client.end(function (err) {
                         if (err) {
