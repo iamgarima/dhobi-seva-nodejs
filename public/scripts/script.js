@@ -23,9 +23,9 @@
       method: 'POST',
       contentType: 'application/json',
       data: JSON.stringify({
-        coursename: courseName,
-        startdate: startDate,
-        enddate: endDate
+        'course_name': courseName,
+        'start_date': startDate,
+        'end_date': endDate
       })
     })
     .then(function (res) {
@@ -58,10 +58,10 @@
       <div class="col s6 m3">
         <div class="card blue-grey darken-1 small">
           <div class="card-content white-text">
-            <span class="card-title card-title-style">${course.coursename}</span>
+            <span class="card-title card-title-style">${course.course_name}</span>
             <hr>
-            <p class="start-date-style">${course.startdate}</p>
-            <p class="end-date-style">${course.enddate}</p>
+            <p class="start-date-style">${course.start_date}</p>
+            <p class="end-date-style">${course.end_date}</p>
           </div>
           <div class="card-action course-action">
             <div class="col s6 center-align">

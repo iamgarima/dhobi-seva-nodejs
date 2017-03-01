@@ -1,7 +1,7 @@
 function Course (req) {
-  this.coursename = req.body.coursename
-  this.startdate = req.body.startdate
-  this.enddate = req.body.enddate
+  this.course_name = req.body.course_name
+  this.start_date = req.body.start_date
+  this.end_date = req.body.end_date
 }
 
 module.exports = {

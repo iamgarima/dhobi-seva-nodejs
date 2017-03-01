@@ -39,11 +39,12 @@ exports.createCourse = (course, cb) => {
       cb(null)
     }
     if (validate.courseDetails(course)) {
-        client.query("INSERT INTO courses (coursename, startdate, enddate) VALUES ('"+course.coursename+"', '"+course.startdate+"', '"+course.enddate+"')", function (err) {
-          done()
-          if (err) console.log(err)
-          cb(course)
-        })
+      client.query("INSERT INTO courses (course_name, start_date, end_date) VALUES ('"+course.course_name+"', '"+course.start_date+"', '"+course.end_date+"') RETURNING course_id", function (err, result) {
+        if (err) cb(null)
+        course.course_id = result.rows[0].course_id
+        done()
+        cb(course)
+      })
     } else {
       console.log('Error')
       cb(null)
@@ -68,6 +69,42 @@ exports.getCourse = (cb) => {
   })
 }
 
+exports.addStudent = (student, cb) => {
+  pool.connect(function (err, client, done) {
+    if (err) {
+      console.log(err)
+      cb(null)
+    }
+    if (validate.studentDetails(student)) {
+      client.query("INSERT INTO students (course_id, student_name, room_number, seat_number) VALUES ('"+student.student_name+"', '"+student.room_number+"', '"+student.seat_number+"') RETURNING student_id", function (err, result) {
+        if (err) cb(null)
+        student.student_id = result.rows[0].student_id
+        done()
+        cb(student)
+      })
+    } else {
+      console.log('Error')
+      cb(null)
+    }
+  })
+}
+
+exports.getStudent = (cb) => {
+  pool.connect(function (err, client, done) {
+    if (err) {
+      console.log(err)
+      cb(null)
+    }
+    client.query('SELECT * FROM students', function (err, result) {
+      done()
+      if (err) {
+        console.log(err)
+        cb(null)
+      }
+      cb(result.rows)
+    })
+  })
+}
 pool.on('error', function (err, client) {
   console.log(err)
 })
